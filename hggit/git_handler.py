@@ -337,6 +337,9 @@ class GitHandler(object):
         self.swap_out_encoding(oldenc)
         return commit.id
 
+    def get_valid_git_username_email(name):
+        return name.lstrip('<').rstrip('>')
+
     def get_git_author(self, ctx):
         # hg authors might not have emails
         author = ctx.user()
@@ -350,11 +353,11 @@ class GitHandler(object):
             email = a.group(2)
             if len(a.group(3)) > 0:
                 name += ' ext:(' + urllib.quote(a.group(3)) + ')'
-            author = name + ' <' + email + '>'
+            author = get_valid_git_username_email(name) + ' <' + get_valid_git_username_email(email) + '>'
         elif '@' in author:
-            author = author + ' <' + author + '>'
+            author = get_valid_git_username_email(author) + ' <' + get_valid_git_username_email(author) + '>'
         else:
-            author = author + ' <none@none>'
+            author = get_valid_git_username_email(author) + ' <none@none>'
 
         if 'author' in ctx.extra():
             author = "".join(apply_delta(author, ctx.extra()['author']))
