@@ -338,7 +338,7 @@ class GitHandler(object):
         return commit.id
 
     def get_valid_git_username_email(self, name):
-        return name.lstrip('<').rstrip('>')
+        return name.lstrip('< ').rstrip('> ')
 
     def get_git_author(self, ctx):
         # hg authors might not have emails
