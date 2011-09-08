@@ -351,7 +351,7 @@ class GitHandler(object):
         if a:
             name = a.group(1)
             email = a.group(2)
-            if len(a.group(3)) > 0:
+            if a.group(3) != None:
                 name += ' ext:(' + urllib.quote(a.group(3)) + ')'
             author = self.get_valid_git_username_email(name) + ' <' + self.get_valid_git_username_email(email) + '>'
         elif '@' in author:
